@@ -1,35 +1,31 @@
-import matplotlib.pyplot as plt
-import numpy as np 
-from mpl_toolkits.mplot3d import Axes3D
+import tkinter as tk
 
-class planet():
-    def __init__(self, x, y, z, mass, radius):
-        self.x = x
-        self.y = y 
-        self.z = z
-        self.mass = mass
-        self.radius = radius
+def number_of_squares():
+    input_text = input("Enter the number of squares to create: ")
+    try:
+        num_squares = int(input_text)
+        if num_squares <= 0:
+            print("Please enter a positive integer.")
+            return
 
-earth = planet(0, 0, 0, 5.972e24, 6371e3)
-mars = planet(10, 5, 12, 6.417e23, 3389.5e3)
-jupiter = planet(20, 15, 10, 1.898e27, 69911e3)
-venus = planet(5, 10, 5, 4.867e24, 6051.8e3)
+        root = tk.Tk()
+        root.title("Darko bingo")
+        # Create a Canvas widget to draw on
+        canvas = tk.Canvas(root, width=1000, height=1000, bg="white")
+        canvas.pack()
+        # Draw squares with text
+        for i in range(num_squares):
+            x1 = 50 + (i % 10) * 100
+            y1 = 50 + (i // 10) * 100
+            x2 = x1 + 80
+            y2 = y1 + 80
+            canvas.create_rectangle(x1, y1, x2, y2, fill="lightblue", outline="black")
+            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"Test {i+1}", font=("Arial", 12))
+        
+        root.mainloop()
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
 
 
-xpoint = [earth.x, mars.x, jupiter.x, venus.x]
-ypoint = [earth.y, mars.y, jupiter.y, venus.y]
-zpoint = [earth.z, mars.z, jupiter.z, venus.z]
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d') 
-ax.set_xlabel('X Coordinate (m)')
-ax.set_ylabel('Y Coordinate (m)')
-ax.set_zlabel('Z Coordinate (m)')
-ax.set_title('3D Planetary Positions')
-
-ax.text(earth.x, earth.y, earth.z, 'Earth', color='black') 
-ax.text(mars.x, mars.y, mars.z, 'Mars', color='red')
-ax.text(jupiter.x, jupiter.y, jupiter.z, 'Jupiter', color='orange')
-ax.text(venus.x, venus.y, venus.z, 'Venus', color='yellow')
-ax.scatter(xpoint, ypoint, zpoint, c='b', marker='o')
-plt.show()
+number_of_squares()
